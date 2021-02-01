@@ -17,14 +17,8 @@ import Label from "reactstrap/lib/Label";
 
 const myAPI = "https://localhost:44314/api/Login";
 
-function EditUser(props) {
-  // const initialValue = {
-  //   name: props.myData.name,
-  //   email: props.myData.email,
-  //   pass: "",
-  //   userType: "dealer",
-  //   id: props.myData.UserID,
-  // };
+function EditManufacturer(props) {
+
   
   const [modal, setModal] = useState(false);
   const [userInfo, setUserInfo] = useState({ 
@@ -32,15 +26,17 @@ function EditUser(props) {
     name: props.User.name,
     email: props.User.email,
     pass: props.User.pass,
-    userType: "Dealer",
+    userType: "Manufacturer",
    });
   const [nameErr,setNameErr] = useState("");
   const [emailErr,setEmailErr] = useState("");
   const [passErr,setPassErr] = useState(""); 
+
   const toggle = () => setModal(!modal);
   const onSubmit = async (e) => {
     e.preventDefault();
   };
+  
 const formValidation = () =>{
         const nameErr = {};
         const emailErr ={};
@@ -80,6 +76,7 @@ const formValidation = () =>{
         return isValid;
 
     }
+
   const EditOnSubmit = () =>{
     const myAPI2 = "https://localhost:44314/api/Users/" + props.User.userID;
     axios.put(myAPI2,userInfo)
@@ -91,19 +88,19 @@ const formValidation = () =>{
 
   
   const onChange = async (e) => {
-
+  
     setUserInfo({
       ...userInfo,
       [e.target.name]: e.target.value,
     });
-    const isValid = formValidation();
-     if(isValid){ 
+  const isValid = formValidation();
+     if(isValid){
     const myAPI2 = "https://localhost:44314/api/Users/" + props.User.userID;
     axios.put(myAPI2,userInfo)
       .then((response=>{
         console.log(response);
-      }))}
-
+      }))
+    }
   };
     return (
       <>
@@ -124,14 +121,13 @@ const formValidation = () =>{
                           <label>UserID</label>
                           <Input
                             placeholder="User ID"
+                            readOnly
                             type="number"
                             name="userID"
                             value={userInfo.userID}
                             onChange={onChange}
-                            readOnly
                           />
                         </FormGroup>
-
                       </Col>
 
                       <Col className="pr-1 pl-1" md="6">
@@ -143,10 +139,9 @@ const formValidation = () =>{
                             value={userInfo.name}
                             name="name"
                             onChange={onChange}
-
                           />
                         </FormGroup>
-                {Object.keys(nameErr).map((key)=>{
+                           {Object.keys(nameErr).map((key)=>{
                     return <div style={{color:"red"}}>{nameErr[key]}</div>
                   })}
                       </Col>
@@ -163,7 +158,7 @@ const formValidation = () =>{
                             onChange={onChange}
                           />
                         </FormGroup>
-                  {Object.keys(emailErr).map((key)=>{
+                           {Object.keys(emailErr).map((key)=>{
                     return <div style={{color:"red"}}>{emailErr[key]}</div>
                   })}
                       </Col>
@@ -178,9 +173,9 @@ const formValidation = () =>{
                             onChange={onChange}
                           />
                         </FormGroup>
-                      {Object.keys(passErr).map((key)=>{
-                        return <div style={{color:"red"}}>{passErr[key]}</div>
-                      })}
+                           {Object.keys(passErr).map((key)=>{
+                    return <div style={{color:"red"}}>{passErr[key]}</div>
+                  })}
                       </Col>
                     </Row>
 
@@ -204,4 +199,4 @@ const formValidation = () =>{
     );
  
 }
-export default EditUser;
+export default EditManufacturer;

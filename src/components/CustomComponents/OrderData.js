@@ -61,9 +61,9 @@ function UserData() {
                 <tr>
                   <th scope="row">{Order.orderID}</th>
                   <td>{Order.productID}</td>
-                  <td>{Order.Product.name}</td>
+                  <td>{Order.prodName}</td>
                   <td>{Order.userID}</td>
-                  <td>{Order.User.name}</td>
+                  <td>{Order.userName}</td>
                   {/* <td className="text-center">
                     <EditUser
                     {...{ loading, User }}

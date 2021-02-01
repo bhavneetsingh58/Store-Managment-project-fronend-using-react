@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import EditUser from '../CustomComponents/EditUser';
+import EditUser from '../CustomComponents/EditManufacturer';
 import {
   Card,
   CardHeader,

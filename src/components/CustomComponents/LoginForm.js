@@ -13,6 +13,11 @@ const myAPI = "https://localhost:44314/api/Login";
 
 function LoginForm() {
  
+  const [emailErr,setEmailErr] = useState({});
+  const [passErr,setPassErr] = useState({});
+
+
+
   const initialValue = {
     email:"",
     pass:""
@@ -35,8 +40,29 @@ function LoginForm() {
 
      });
   }
+    const formValidation = () =>{
+        const emailErr ={};
+        const passErr = {};
+        let isValid = true;
+        
+        if(login.email==""){
+            emailErr.NoValueFound = "Please Enter a Value";
+            isValid =false;
+        }
+        if(login.pass==""){
+            passErr.NoValueFound = "Please Enter a Value";
+            isValid =false;
+        }        
+        setEmailErr(emailErr);
+        setPassErr(passErr);
+        return isValid;
+
+    }
     const onClick = (e) =>{
+      const isValid = formValidation();
+      if(isValid){
       e.preventDefault();
+      //if(isValid){
       axios.post(myAPI,login)
       .then((response=>{
         console.log(response);
@@ -48,11 +74,11 @@ function LoginForm() {
       userType =="Admin"||"Manufacturer"||"Dealer"?
       UserProfile.setLoggedInState(true) &&
       UserProfile.setUserType(userType):""
-      
+    
       // console.log(UserProfile.getLoggedInState()),
       // console.log(UserProfile.getUserType())
 )
-      
+    }   
     }
   
     if(userType=="Admin"){

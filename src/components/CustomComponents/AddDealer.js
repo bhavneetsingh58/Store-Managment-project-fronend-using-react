@@ -28,6 +28,9 @@ function AddUser() {
   //const [seatno, setSeatno] = useState("");
   const [pass, setPass] = useState("");
   //const [standard, setStandard] = useState("");
+  const [nameErr,setNameErr] = useState("");
+  const [emailErr,setEmailErr] = useState("");
+  const [passErr,setPassErr] = useState(""); 
 
   let history = useHistory();
 
@@ -36,9 +39,51 @@ function AddUser() {
   };
 
  const myAPI = "https://localhost:44314/api/Users";
+ 
+  const formValidation = () =>{
+        const nameErr = {};
+        const emailErr ={};
+        const passErr = {};
+        let isValid = true;
+        var emailRegex = /[^@]+@[a-zA-Z]+\.[a-zA-Z]{2,6}/
+        var nameRegex =/[a-zA-Z]{3,20}/
+        var passRegex =/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/
+
+        if(name==""){
+            nameErr.NoValueFound = "Please Enter a Value";
+            isValid =false;
+        }       
+        else if(!(nameRegex.test(name))){
+            nameErr.IncorrectFormat = "Incorrect Format";
+            isValid =false;
+        }             
+        if(email==""){
+            emailErr.NoValueFound = "Please Enter a Value";
+            isValid =false;
+        }
+        else if (!(emailRegex.test(email))) {
+            emailErr.IncorrectFormat = "Incorrect Format";
+            isValid =false;
+        }
+        if(pass==""){
+            passErr.NoValueFound = "Please Enter a Value";
+            isValid =false;
+        }  
+        else if(!(passRegex.test(pass))){
+            passErr.IncorrectFormat = "Use Minimum eight characters, at least one letter, one number and one special characte";
+            isValid =false;
+        }                
+        setNameErr(nameErr); 
+        setEmailErr(emailErr);
+        setPassErr(passErr);
+        return isValid;
+
+    }
+
 
   function addDealer(newDealer,e) {
-     
+     const isValid = formValidation();
+     if(isValid){
       setLoading(true);
       axios.post(myAPI,newDealer)
       .then((response=>{
@@ -53,7 +98,7 @@ function AddUser() {
       }))
 
       
-  }
+}}
 
   return (
     <>
@@ -75,6 +120,9 @@ function AddUser() {
                       onChange={(e) => setname(e.target.value)}
                     />
                   </FormGroup>
+                  {Object.keys(nameErr).map((key)=>{
+                    return <div style={{color:"red"}}>{nameErr[key]}</div>
+                  })}                  
                 </Col>
                 <Col className="pl-1 pr-1" md="6">
                   <FormGroup>
@@ -86,6 +134,9 @@ function AddUser() {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </FormGroup>
+                  {Object.keys(emailErr).map((key)=>{
+                    return <div style={{color:"red"}}>{emailErr[key]}</div>
+                  })}                  
                 </Col>
               </Row>
               <Row>
@@ -99,6 +150,9 @@ function AddUser() {
                       onChange={(e) => setPass(e.target.value)}
                     />
                   </FormGroup>
+                  {Object.keys(passErr).map((key)=>{
+                    return <div style={{color:"red"}}>{passErr[key]}</div>
+                  })}
                 </Col>
               </Row>
 

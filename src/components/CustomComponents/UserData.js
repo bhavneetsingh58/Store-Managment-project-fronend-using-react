@@ -55,7 +55,7 @@ function UserData() {
             </thead>
             <tbody>
               {myData.map((User) => (
-               User.userType === "Dealer"||"dealer"?
+               User.userType === "Dealer"?
                 <tr>
                   <th scope="row">{User.userID}</th>
                   <td>{User.name}</td>
