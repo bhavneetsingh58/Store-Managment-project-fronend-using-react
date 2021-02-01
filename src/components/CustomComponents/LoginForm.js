@@ -102,7 +102,7 @@ function LoginForm() {
             <Row>
               <FormGroup>
                 <Label>Email</Label>
-                <Input type="email" placeholder="Enter Your Email" name="email" value={login.email} onChange={onChange}>
+                <Input required type="email" placeholder="Enter Your Email" name="email" value={login.email} onChange={onChange}>
                 </Input>
                 
               </FormGroup>
@@ -111,7 +111,7 @@ function LoginForm() {
             <Row>
               <FormGroup>
                 <Label>Password</Label>
-                <Input type="password" placeholder="Enter Your Password" name="pass" value={login.pass} onChange={onChange}></Input>
+                <Input required type="password" placeholder="Enter Your Password" name="pass" value={login.pass} onChange={onChange}></Input>
               </FormGroup>
             </Row>
             <Row> 

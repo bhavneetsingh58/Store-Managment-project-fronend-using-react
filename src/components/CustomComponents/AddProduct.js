@@ -28,6 +28,8 @@ function AddProduct() {
   const [photo,setPhoto] = useState("");
   const [priceErr,setPriceErr] = useState({});
   const [quantityErr,setQuantityErr] = useState({});
+  const [nameErr,setNameErr] = useState({});
+  const [photoErr,setPhotoErr] = useState({});
 
   let history = useHistory();
 
@@ -79,7 +81,14 @@ function AddProduct() {
       const formValidation = () => {
         const priceErr = {} ;
         const quantityErr = {};
+        const nameErr ={};
+        const photoErr ={};
         let isValid = true;
+        
+        if(name==""){
+            nameErr.NoValueFound = "Please Enter a Non-zero Positive Value";
+            isValid =false;
+        }
 
         if(price<0){
             priceErr.NegitiveValue = "Negitive Value not Allowed";
@@ -88,6 +97,10 @@ function AddProduct() {
         if(price>99999){
              priceErr.tooBig = "Max price of product can be 99999 ";
              isValid =false;
+        }
+        if(price==0){
+            priceErr.NoValueFound = "Please Enter a Non-zero Positive Value";
+            isValid =false;
         }
 
         if(quantity<0){
@@ -98,9 +111,19 @@ function AddProduct() {
              quantityErr.tooBig = "Max Quantity of product can be 10 ";
              isValid =false;
         }
+        if(quantity==0){
+             quantityErr.NoValueFound ="Please Enter a Non-zero Positive Value";
+             isValid =false;
+        }
 
+         if(photo==""){
+            photoErr.NoValueFound = "Please Select a photo";
+            isValid =false;
+        }
+        setNameErr(nameErr);
         setPriceErr(priceErr);
-        setQuantityErr(quantityErr)
+        setQuantityErr(quantityErr);
+        setPhotoErr(photoErr);
         return isValid;
 
       }
@@ -138,18 +161,23 @@ function AddProduct() {
                   <FormGroup>
                     <label>Name</label>
                     <Input
+                      required
                       placeholder="name"
                       type="text"
                       value={name}
                       onChange={(e) => setname(e.target.value)}
                     />
                   </FormGroup>
+                  {Object.keys(nameErr).map((key)=>{
+                    return <div style={{color:"red"}}>{nameErr[key]}</div>
+                  })}
                 </Col>
 
                 <Col className="pl-1 pr-1" md="6">
                   <FormGroup>
                     <label>price</label>
                     <Input
+                      required
                       placeholder="price"
                       type="number"
                       value={price}
@@ -166,6 +194,7 @@ function AddProduct() {
                   <FormGroup>
                     <label>Quantity</label>
                     <Input
+                      required
                       placeholder="Quantity"
                       type="number"
                       value={quantity}
@@ -181,6 +210,7 @@ function AddProduct() {
                   <FormGroup>
                     <label>Input</label>
                     <Input
+                      required
                       placeholder="file"
                       type="file"
                       //value={initialValue.photo}
@@ -188,6 +218,9 @@ function AddProduct() {
                       onChange = {(e) => {uploadImage(e);}}
                     />
                   </FormGroup>
+                  {Object.keys(photoErr).map((key)=>{
+                    return <div style={{color:"red"}}>{photoErr[key]}</div>
+                  })}
                 </Col>
 
 
